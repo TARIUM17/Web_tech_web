@@ -1,0 +1,10 @@
+.wrapper {
+    flex: 1;
+    font: 10px sans-serif;
+    word-spacing: -1em;
+    text-shadow: 1px;
+    border-color: rgb(92, 17, 216);
+    background-color: rgb(92, 187, 216);
+    padding: 10px;
+    margin: 2px;
+}
