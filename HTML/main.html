@@ -5,16 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberFun Tech.</title>
     <link rel="stylesheet" href="../CSS/Up_shapes.css">
+    <link rel="script" href="../JavaScript/test.js">
 </head>
-<header>
-    <div class = "wrapper">
-        <h1>CyberFun</h1><h1>Tech</h1>
-    </div>
-</header>
 <body>
-    <p>Welcome to CyberFun Tech. The compame</p>
-</body>
+<!-- <style>
+    {
+        background-color: #000;
+    }
+</style> -->
+<div class="entering">
+    <video id="bg-video" autoplay muted playsinline>
+        <source src="../samples/Web_animation_test.mp4" type="video/mp4">
+        <h1>Ваш браузер не поддерживает видео.</h1>
+    </video>
+
+    <div class = "wrapper">
+        <div class = "logo"> 
+            <img src="../samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
+        </div>
+        <h2>
+            <span class = "text-logo"> The place where 
+                <span class = "text_logo_color">
+                    fun
+                </span> 
+                <br> 
+                <span class = "Up_text_mover">and 
+                    <span class = "text_logo_color"> 
+                        technologies
+                    </span> unite!
+                </span>
+            </span>
+            <nav class = "Upper_logo_menu">
+                <span class = "Up_placer">
+                    <a href = "№">About Us</a>
+                    <a href = "Developments.html" target="_self">Developments</a>
+                    <a href = "#">Profile</a>
+                </span>
+            </nav>
+        </h2>
+    </div>
+    <!-- <p>Welcome to CyberFun Tech. The company that make you smile every day!</p> -->
+
+    <div class="content">
+        <input type="email" id="email" placeholder="...@..."><br><br>
+        <input type="pass" id="pass" placeholder="Your pass">
+        <a href="#" id="guest">Enter as guest</a>
+        <button id="resume-btn">Send</button>
+    </div>
+</div>
+<div class="after_reg">
+    <div class="center-board">
+        <!-- <div class="header-txt">
+            <h1><b>Welcom, new visitor!</b></h1>
+            Hi there! As the HR Manager, I can tell you that our greatest asset isn't just our robots and technologies — it's the brilliant minds behind them. We are always looking for pioneers and problem-solvers. So if you really interested in robots, technologies and our future, please contact with us! Oh, and we hope your visit today gives you a glimpse into our culture of creativity and engineering excellence. Enjoy your stay!
+        </div> -->
+    </div>
+</div>
+    <script>
+        const video = document.getElementById('bg-video');
+        const resumeBtn = document.getElementById('resume-btn');
+        const email = document.getElementById('email');
+        const pass = document.getElementById('pass');
+        const guest_enter = document.getElementById('guest');
+        
+        const STOP_TIME = 5; 
+        let is_Paused = false;
+        let is_Pressed =false
+
+        video.addEventListener('loadedmetadata', () => {
+            video.playbackRate = 4; 
+        });
+
+        video.addEventListener('timeupdate', () => {
+            if (!is_Paused && video.currentTime >= STOP_TIME) {
+                    video.pause();
+                    is_Paused = true;
+                    resumeBtn.style.display = 'block'; //'inline-block';
+                    email.style.display = 'block';
+                    guest_enter.style.display = 'inline-block'
+                    pass.style.display = 'inline-block';
+            }
+        });
+
+        resumeBtn.addEventListener('click', () => {
+            is_Pressed = true;
+            video.play();
+            hide_elements();
+        });
+
+        guest_enter.addEventListener('click', (e) => {
+            is_Paused = true
+            video.play();
+            hide_elements();
+        });
+
+        function hide_elements() {
+            resumeBtn.style.display = 'none';
+            email.style.display = 'none';
+            guest_enter.style.display = 'none';
+            pass.style.display = 'none';
+        };
+    </script>
+
 <footer>
 
 </footer>
+</body>
 </html>
