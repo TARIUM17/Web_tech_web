@@ -6,6 +6,7 @@
     <title>CyberFun Tech.</title>
     <link rel="stylesheet" href="../CSS/Up_shapes.css">
     <link rel="script" href="../JavaScript/test.js">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <!-- <style>
@@ -13,65 +14,91 @@
         background-color: #000;
     }
 </style> -->
-<div class="entering">
-    <video id="bg-video" autoplay muted playsinline>
-        <source src="../samples/Web_animation_test.mp4" type="video/mp4">
-        <h1>Ваш браузер не поддерживает видео.</h1>
-    </video>
+<video id="bg-video" autoplay muted playsinline>
+    <source src="../samples/Web_animation_test.mp4" type="video/mp4">
+    <h1>Ваш браузер не поддерживает видео.</h1>
+</video>
 
-    <div class = "wrapper">
-        <div class = "logo"> 
-            <img src="../samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
-        </div>
-        <h2>
-            <span class = "text-logo"> The place where 
-                <span class = "text_logo_color">
-                    fun
-                </span> 
-                <br> 
-                <span class = "Up_text_mover">and 
-                    <span class = "text_logo_color"> 
-                        technologies
-                    </span> unite!
-                </span>
+<div class = "wrapper" id="change_test">
+    <div class = "logo"> 
+        <img src="../samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
+    </div>
+    <h2>
+        <span class = "text-logo"> The place where 
+            <span class = "text_logo_color">
+                fun
+            </span> 
+            <br> 
+            <span class = "Up_text_mover">and 
+                <span class = "text_logo_color"> 
+                    technologies
+                </span> unite!
             </span>
-            <nav class = "Upper_logo_menu">
-                <span class = "Up_placer">
-                    <a href = "№">About Us</a>
-                    <a href = "Developments.html" target="_self">Developments</a>
-                    <a href = "#">Profile</a>
-                </span>
-            </nav>
-        </h2>
-    </div>
-    <!-- <p>Welcome to CyberFun Tech. The company that make you smile every day!</p> -->
+        </span>
+        <nav class = "Upper_logo_menu">
+            <span class = "Up_placer">
+                <a href = "#">About Us</a>
+                <a href = "Developments.html" target="_self">Developments</a>
+                <a href = "Profile.html" target="_self">Profile</a>
+            </span>
+        </nav>
+    </h2>
+</div>
 
-    <div class="content">
-        <input type="email" id="email" placeholder="...@..."><br><br>
-        <input type="pass" id="pass" placeholder="Your pass">
+<div class="content">
+    <input type="email" id="email" placeholder="...@..."><br><br>
+    <input type="password" id="pass" placeholder="Your pass">
         <a href="#" id="guest">Enter as guest</a>
+        <!-- <a href="#" id="reg">registration</a> -->
         <button id="resume-btn">Send</button>
-    </div>
 </div>
-<div class="after_reg">
+
+<div class="after_reg" id="text">
     <div class="center-board">
-        <!-- <div class="header-txt">
-            <h1><b>Welcom, new visitor!</b></h1>
-            Hi there! As the HR Manager, I can tell you that our greatest asset isn't just our robots and technologies — it's the brilliant minds behind them. We are always looking for pioneers and problem-solvers. So if you really interested in robots, technologies and our future, please contact with us! Oh, and we hope your visit today gives you a glimpse into our culture of creativity and engineering excellence. Enjoy your stay!
-        </div> -->
+        <div class="box1">
+            <div class="header-txt">
+                <h1><b> Welcome, new visitor!</b></h1>
+                <p>Hi there! As the HR Manager, I can tell you that our greatest asset isn't just our robots and technologies — it's the brilliant minds behind them. We are always looking for pioneers and problem-solvers. So if you really interested in robots, technologies and our future, please contact with us! Oh, and we hope your visit today gives you a glimpse into our culture of creativity and engineering excellence. Enjoy your stay!</p>
+            </div>
+        </div>
+        <div class="box2">
+            <img src="../samples/Robot-Era-1536x864.jpg" alt="Our goals and achivments">
+        </div>
+        <div class="box3">
+            <div class="header-txt">
+                <h1><b>Who we are?</b></h1>
+                <p>A group of engineers and developers who have decided to use their knowledge, actions, and technologies to advance the modern world's evolution. Our company comprises approximately 50 highly qualified specialists in the fields of programming, engineering, physical design, and design. Over the course of our existence, we have concluded numerous successful deals with other companies, such as BSI, W.A. Robotics, Happy M.F. and others.</p>
+            </div>
+        </div>
+        <div class="box4">
+            <img src="../samples/depositphotos_237141906-stock-photo-man-in-suit-and-tie.jpg" alt="Don't let us down!">
+        </div>
     </div>
 </div>
-    <script>
+
+<script>
         const video = document.getElementById('bg-video');
         const resumeBtn = document.getElementById('resume-btn');
-        const email = document.getElementById('email');
-        const pass = document.getElementById('pass');
+        const email_inp = document.getElementById('email');
+        const pass_inp = document.getElementById('pass');
         const guest_enter = document.getElementById('guest');
+        const text = document.getElementById('text');
         
-        const STOP_TIME = 5; 
+        const STOP_TIME = 5;
         let is_Paused = false;
-        let is_Pressed =false
-
+        let is_Pressed = false;
+        
+        const SUPABASE_URL = '***';
+        const SUPABASE_ANON_KEY = '***';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        const change = document.getElementById('change_test');
+        
+        (async () => {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          change.style.backgroundColor = 'purpule';
+        })();
+        
         video.addEventListener('loadedmetadata', () => {
             video.playbackRate = 4; 
         });
@@ -81,16 +108,29 @@
                     video.pause();
                     is_Paused = true;
                     resumeBtn.style.display = 'block'; //'inline-block';
-                    email.style.display = 'block';
+                    email_inp.style.display = 'block';
                     guest_enter.style.display = 'inline-block'
-                    pass.style.display = 'inline-block';
+                    pass_inp.style.display = 'inline-block';
             }
         });
 
-        resumeBtn.addEventListener('click', () => {
+        resumeBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
             is_Pressed = true;
             video.play();
             hide_elements();
+            const email = email_inp.value;
+            const password = pass_inp.value;
+            //background-color: rgba(83, 215, 255, 0.675);
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                change.style.backgroundColor = 'green';
+                } catch (error) {
+                    change.style.backgroundColor = 'red';
+                    alert(error);
+                }
         });
 
         guest_enter.addEventListener('click', (e) => {
@@ -101,14 +141,16 @@
 
         function hide_elements() {
             resumeBtn.style.display = 'none';
-            email.style.display = 'none';
+            email_inp.style.display = 'none';
             guest_enter.style.display = 'none';
-            pass.style.display = 'none';
+            pass_inp.style.display = 'none';
+            setTimeout(() => {
+                text.style.opacity = '1';
+                text.style.visibility = 'visible';
+            }, 1000);
         };
+
     </script>
 
-<footer>
-
-</footer>
 </body>
 </html>

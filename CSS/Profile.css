@@ -1,0 +1,87 @@
+body{
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(200deg, black, rgb(86, 86, 86), black, rgb(86, 86, 86), black, rgb(86, 86, 86), black);
+    background-size: 320% 320%;
+    animation: bg_move 40s linear infinite;
+} 
+
+@keyframes bg_move {
+    0%{
+        background-position: 0%, 12%;
+    }
+    50%{
+        background-position: 100%, 50%;
+    }
+    100%{
+        background-position: 0%, 90%;
+    }
+}
+
+.enter_box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    padding: 2%;
+    background-color: rgb(32, 32, 32);
+    border: 4px solid rgb(92, 92, 92);
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.enter_box input{
+    width: 80%;
+    padding: 4%;
+    border-radius: 4px;
+    border-style: solid;
+    display: block;
+    z-index: 10;
+    box-sizing: border-box;
+    background-color: rgba(91, 91, 91, 0.652);
+}
+
+.inline_buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;;
+    gap: 10%;
+}
+
+.inline_buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: lightgrey;
+    color: black;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.inline_buttons #registration{
+    grid-column: 1;
+    display: block;
+}
+
+.inline_buttons #send_data{
+    grid-column: 2;
+}
+
+.enter_box #username{
+    display: none;
+    opacity: 0;
+}
+
+.enter_box #code_word{
+    display: none;
+    opacity: 0;
+}
+
+.inline_buttons button:hover{
+    background: linear-gradient(10deg, gray, white);
+}

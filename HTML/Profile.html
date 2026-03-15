@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your profile</title>
+    <link rel="stylesheet" href="../CSS/Up_shapes.css">
+    <link rel="stylesheet" href="../CSS/Profile.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class = "wrapper" id="change_test">
+        <div class = "logo"> 
+            <img src="../samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
+        </div>
+        <h2>
+        <span class = "text-logo"> The place where 
+            <span class = "text_logo_color">
+                fun
+            </span> 
+            <br> 
+            <span class = "Up_text_mover">and 
+                <span class = "text_logo_color"> 
+                    technologies
+                </span> unite!
+            </span>
+        </span>
+        <nav class = "Upper_logo_menu">
+            <span class = "Up_placer">
+                <a href = "main.html" target="_self">About Us</a>
+                <a href = "Developments.html" target="_self">Developments</a>
+                <a href = "#">Profile</a>
+            </span>
+        </nav>
+        </h2>
+    </div>
+
+    <div class="enter_box">
+        Enter your ID card
+        <input type="email" id="profile_email" placeholder="...@...">
+        <input type="password" id="profile_pass" placeholder="Your pass">
+        <input type="name" id="username" placeholder="Your username">
+        <input type="text" id="code_word" placeholder="Secret word">
+        <div class="inline_buttons">
+            <button id="button">Registration</button>
+            <button id="send_data">Send</button>
+        </div>
+    </div>
+    <script>
+        const button = document.getElementById('button');
+        const username_state = document.getElementById('username');
+        const code_word_state = document.getElementById('code_word');
+        const enter_text = document.querySelector('.enter_box');
+        let is_Pressed = false;
+
+        button.addEventListener('click', (e) => {
+            is_Pressed = !is_Pressed;
+            if(is_Pressed) {
+                enter_text.style.color = 'rgb(32, 32, 32)';
+                button.textContent = 'Enter as';
+                username_state.style.display = 'block';
+                username_state.style.opacity = 1;
+                code_word_state.style.display = 'block';
+                code_word_state.style.opacity = 1;
+            } else {
+                enter_text.style.color = 'white';
+                button.textContent = 'Registration';
+                username_state.style.display = 'none';
+                username_state.style.opacity = 0;
+                code_word_state.style.display = 'none';
+                code_word_state.style.opacity = 0;
+            }
+        })
+    </script>
+</div>
+</body>
+</html>
