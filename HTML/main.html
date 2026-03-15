@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../CSS/Up_shapes.css">
     <link rel="script" href="../JavaScript/test.js">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
 </head>
 <body>
 <!-- <style>
@@ -88,8 +89,6 @@
         let is_Paused = false;
         let is_Pressed = false;
         
-        const SUPABASE_URL = '***';
-        const SUPABASE_ANON_KEY = '***';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         const change = document.getElementById('change_test');
