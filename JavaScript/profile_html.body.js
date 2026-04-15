@@ -12,17 +12,16 @@ export const content_profile = `
     </div>
 
     <div class="data_block_info">
-        <form>
-            Hi, <span class="data_username"></span>!;
-            We glad to see you here.    
-        </form>
-        Do you want to send your development to us? Please send the information here: <a href="#" target="_self">Form for projects</a>.
+        <p>Hi, <span class="data_username"></span>!
+        We glad to see you here.</p>
+        <h3>Your level: <span class="depen_role"></span>.</h3>
+        <br>
+        <div class=".user_devs"></div>
+        <br>
+        <h3>Marked products:</h3><div class="list_of_fav"></div>
+        <br>
+        Do you want to send your development to us? Please send the information here: <a href="#" target="_self" id = "invention_form">Form for projects</a>.
         
-        <div class="list_of_fav"></div>
-        
-        <div class="depen_role"></div>
     </div>
-
-    
 </div>
 `;

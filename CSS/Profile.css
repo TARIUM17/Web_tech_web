@@ -33,7 +33,14 @@ body{
     align-items: center;
     box-sizing: border-box;
     opacity: 1;
-    visibility: visible;
+}
+
+
+.data_block_info {
+    color: white;
+    display: none;
+    opacity: 0;
+    /* background: linear-gradient(200deg, black, black, black, white, black, black, white, black, black, black); */
 }
 
 .enter_box input{
@@ -108,12 +115,4 @@ body{
 .enter_box::before {
     filter: blur(1.5rem);
     opacity: 0.4;
-}
-
-.data_block_info {
-    color: white;
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    /* background: linear-gradient(200deg, black, black, black, white, black, black, white, black, black, black); */
 }

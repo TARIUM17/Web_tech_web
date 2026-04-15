@@ -33,4 +33,4 @@ const content_main = `
 </div>
 </header>
 `;
-document.body.innerHTML = content_main;
+document.body.innerHTML = content_main; 

@@ -11,9 +11,11 @@ profile_button.addEventListener("click", async (e) => {
     Hide(content_profile);
 
     Profile();
+
 });
 
 function Profile() {
+        document.body.style.overflow = '';
         const button = document.getElementById('reg_button');
         const send_button = document.getElementById('send_data');
         const username_state = document.getElementById('username');
@@ -21,8 +23,6 @@ function Profile() {
         const enter_text = document.querySelector('.enter_box');
         console.log(data_block);
         let is_Pressed_p = false;
-        
-        (async () => { const { data: { session } } = await supabaseClient.auth.getSession() })();
 
         button.addEventListener('click', (e) => {
             is_Pressed_p = !is_Pressed_p;
@@ -47,12 +47,9 @@ function Profile() {
                 
                 if (!check(email, password)) return;
                 try {
-                    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    const { data: login , error } = await supabaseClient.auth.signInWithPassword({ email, password });
                     if (error) throw error;
-                    enter_text.style.opacity = 0;
-                    enter_text.style.display = 'none';
-                    data_block.style.opacity = 1;
-                    data_block.style.display = 'block';
+                    hide_blocks(enter_text, data_block);
                 } catch (error) {
                     button.style.backgroundColor = 'red';
                     alert(error.message);
@@ -69,10 +66,7 @@ function Profile() {
                     });
                     if (signUpError) {console.log('error with sign up'); throw signUpError;}
                         console.log('1');
-                    enter_text.style.opacity = 0;
-                    enter_text.style.visibility = 'hidden';
-                    data_block.style.opacity = 1;
-                    data_block.style.visibility = 'visible';
+                    hide_blocks(enter_text, data_block);
                     const user = signUpData.user;
                     console.log('test1');
                     if (!user) throw new Error('User not created!');
@@ -83,17 +77,97 @@ function Profile() {
                     const { error: error_insert } = await supabaseClient.from('Roles').insert([{user : user_UID}]);
                         console.log('3');
                     if(error_insert) throw error_insert;
-                } catch (error) {
-                    alert(error.message);
+
+                    } catch (error) {
+                        alert(error.message);
+                    } 
                 }
-            }
-        })
+                await After();
+            })
     }
 
-        const check = (email, password) => {
-            if (!email || !password) {
-                alert("Email and password can not be empty!");
-                return false
-            }
-            return true
+async function After()
+{
+    try {
+    const { data: { session }, error: sesserror } = await supabaseClient.auth.getSession();
+    console.log("---------");
+    console.log(session);
+    if(sesserror || !session.user) throw new Error ('NO current session was found!')
+    const curr_user = session.user;
+    console.log(curr_user);
+    const curr_name = curr_user.user_metadata.name;
+    console.log(curr_name);
+
+    const list = document.querySelector('.data_username');
+    list.innerHTML = '';
+    list.append(curr_name);
+
+    const curr_role = document.querySelector('.depen_role');
+    console.log("1", curr_role);
+    const user_id = curr_user.id;
+    const { data: data_user_role, error: user_error } = await supabaseClient.from('Roles').select('role, favourite').eq('user', user_id).single(); //Table
+    if (user_error) throw user_error;
+    curr_role.innerHTML='';
+    curr_role.append(data_user_role.role);
+    console.log(data_user_role.role);
+
+    const list_fav = document.querySelector('.list_of_fav');
+    list_fav.innerHTML = '';
+    const curr_list_favourites = data_user_role.favourite;
+    console.log(data_user_role.favourite);
+    if (!curr_list_favourites || curr_list_favourites.length === 0)
+            list_fav.append('empty!');
+    else {
+        for (const index of curr_list_favourites) {
+            const {data, error: list_error} = await supabaseClient.from('Product').select('img_url, name').eq('id', index).single();
+            if (list_error || !data) continue;
+            const img = document.createElement('img');
+            img.src = data.img_url;
+            img.alt = data.name;
+            img.loading = 'lazy';
+            img.style.float = 'left';
+            img.style.width = '10vw';
+            img.style.height = 'auto';
+            img.style.padding = '3%';   
+            list_fav.appendChild(img);
+            list_fav.append(data.name);
+            list_fav.append(document.createElement('br'));
         }
+    }
+    } catch (error) {
+        console.log('Can not get access to your profile data');
+        throw(error);
+    }
+}
+            
+    //         const img = document.createElement('img');
+    //         img.src = product.url_img;
+    //         img.alt = product.name;
+    //         img.loading = 'lazy';
+    //         Object.assign(img.style, {
+    //             float: 'left',
+    //             width: '14vw',
+    //             height: 'auto',
+    //             padding: '3%'
+    //         });
+            
+    //         list_fav.appendChild(img);
+    //         list_fav.appendChild(document.createTextNode(product.name));
+    //         list_fav.appendChild(document.createElement('br'));
+    //     }
+
+
+    const check = (email, password) => {
+        if (!email || !password) {
+            alert("Email and password can not be empty!");
+            return false
+        }
+        return true
+    }
+
+    function hide_blocks(enter_text, data_block){
+        enter_text.style.opacity = 0;
+        enter_text.style.display = 'none';
+        data_block.style.opacity = 1;
+        data_block.style.display = 'block';
+    }

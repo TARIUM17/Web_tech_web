@@ -32,7 +32,7 @@ async function Developments() {
         text_name.textContent = row.name;
         
         const text_other = document.createElement('p');
-        text_other.textContent = row.info;;
+        text_other.textContent = row.info;
         
         const img = document.createElement('img');
         img.src = row.img_url;
@@ -41,7 +41,7 @@ async function Developments() {
         
         element.innerHTML = '';
         element.appendChild(img);
-        element.appendChild(text_name)
+        element.appendChild(text_name);
         element.appendChild(text_other);
   })
 }
