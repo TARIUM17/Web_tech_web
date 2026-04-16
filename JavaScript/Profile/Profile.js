@@ -1,7 +1,7 @@
-import{ SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import{ SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
 import {content_profile} from "./profile_html.body.js";
 const profile_button = document.getElementById('profile-link');
-import  Hide  from "./hide_bg.js";
+import  Hide  from "../hide_bg.js";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -65,22 +65,16 @@ function Profile() {
                         },
                     });
                     if (signUpError) {console.log('error with sign up'); throw signUpError;}
-                        console.log('1');
+
                     hide_blocks(enter_text, data_block);
                     const user = signUpData.user;
-                    console.log('test1');
-                    if (!user) throw new Error('User not created!');
-                    console.log('test2');
+                    if (!user) throw new Error('User not created!')
                     const user_UID = user.id;
-                        console.log('2');
-                        console.log(user_UID);
                     const { error: error_insert } = await supabaseClient.from('Roles').insert([{user : user_UID}]);
-                        console.log('3');
-                    if(error_insert) throw error_insert;
-
+                    if(error_insert) throw new Error('Failed to connect user\'s data');
                     } catch (error) {
-                        alert(error.message);
-                    } 
+                        alert(error.message());
+                    };
                 }
                 await After();
             })
@@ -90,31 +84,24 @@ async function After()
 {
     try {
     const { data: { session }, error: sesserror } = await supabaseClient.auth.getSession();
-    console.log("---------");
-    console.log(session);
     if(sesserror || !session.user) throw new Error ('NO current session was found!')
     const curr_user = session.user;
-    console.log(curr_user);
     const curr_name = curr_user.user_metadata.name;
-    console.log(curr_name);
 
     const list = document.querySelector('.data_username');
     list.innerHTML = '';
     list.append(curr_name);
 
     const curr_role = document.querySelector('.depen_role');
-    console.log("1", curr_role);
     const user_id = curr_user.id;
     const { data: data_user_role, error: user_error } = await supabaseClient.from('Roles').select('role, favourite').eq('user', user_id).single(); //Table
     if (user_error) throw user_error;
     curr_role.innerHTML='';
     curr_role.append(data_user_role.role);
-    console.log(data_user_role.role);
 
     const list_fav = document.querySelector('.list_of_fav');
     list_fav.innerHTML = '';
     const curr_list_favourites = data_user_role.favourite;
-    console.log(data_user_role.favourite);
     if (!curr_list_favourites || curr_list_favourites.length === 0)
             list_fav.append('empty!');
     else {
@@ -128,35 +115,18 @@ async function After()
             img.style.float = 'left';
             img.style.width = '10vw';
             img.style.height = 'auto';
-            img.style.padding = '3%';   
+            img.style.padding = '3%';
+            list_fav.appendChild(document.createElement('hr'));
             list_fav.appendChild(img);
             list_fav.append(data.name);
             list_fav.append(document.createElement('br'));
+            //list_fav.appendChild(document.createElement('hr'));
         }
     }
-    } catch (error) {
-        console.log('Can not get access to your profile data');
-        throw(error);
+    } catch (user_error) {
+        alert('Can not get access to your profile data');
     }
 }
-            
-    //         const img = document.createElement('img');
-    //         img.src = product.url_img;
-    //         img.alt = product.name;
-    //         img.loading = 'lazy';
-    //         Object.assign(img.style, {
-    //             float: 'left',
-    //             width: '14vw',
-    //             height: 'auto',
-    //             padding: '3%'
-    //         });
-            
-    //         list_fav.appendChild(img);
-    //         list_fav.appendChild(document.createTextNode(product.name));
-    //         list_fav.appendChild(document.createElement('br'));
-    //     }
-
-
     const check = (email, password) => {
         if (!email || !password) {
             alert("Email and password can not be empty!");

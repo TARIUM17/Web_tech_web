@@ -1,5 +1,5 @@
 import {main_after} from "./main_html_after";
-import Hide from "./hide_bg";
+import Hide from "../hide_bg";
 const about_button = document.getElementById('about-link');
 about_button.addEventListener("click", (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import{ SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import{ SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
         
         const content = document.querySelector('header');
         const content_text = `

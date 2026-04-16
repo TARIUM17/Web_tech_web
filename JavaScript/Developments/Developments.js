@@ -1,6 +1,6 @@
 import {content_develops} from "./Developments_html.body.js";
-import Hide from "./hide_bg.js";
-import {SUPABASE_URL, SUPABASE_ANON_KEY} from '../JavaScript/config.js';
+import Hide from "../hide_bg.js";
+import {SUPABASE_URL, SUPABASE_ANON_KEY} from '../config.js';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -17,7 +17,6 @@ Developments_button.addEventListener("click", async (e) => {
 async function Developments() {
 
     const { data, error } = await supabaseClient.from('Product').select('name, info, img_url'); //Table
-    console.log('обработка');
     if (error) {console.log('Ошибка Supabase:', error); return;}
     if (!data || data.length === 0) return;
 
@@ -26,7 +25,6 @@ async function Developments() {
     list.forEach((element, index) => {
         const row = data[index];
         if (!row) return;
-        console.log('обработка1');
         
         const text_name = document.createElement('h1');
         text_name.textContent = row.name;
