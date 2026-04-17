@@ -80,8 +80,7 @@ function Profile() {
             })
     }
 
-async function After()
-{
+async function After() {
     try {
     const { data: { session }, error: sesserror } = await supabaseClient.auth.getSession();
     if(sesserror || !session.user) throw new Error ('NO current session was found!')
@@ -105,39 +104,75 @@ async function After()
     if (!curr_list_favourites || curr_list_favourites.length === 0)
             list_fav.append('empty!');
     else {
+        list_fav.appendChild(document.createElement('hr'));
         for (const index of curr_list_favourites) {
-            const {data, error: list_error} = await supabaseClient.from('Product').select('img_url, name').eq('id', index).single();
-            if (list_error || !data) continue;
-            const img = document.createElement('img');
-            img.src = data.img_url;
-            img.alt = data.name;
-            img.loading = 'lazy';
-            img.style.float = 'left';
-            img.style.width = '10vw';
-            img.style.height = 'auto';
-            img.style.padding = '3%';
-            list_fav.appendChild(document.createElement('hr'));
-            list_fav.appendChild(img);
-            list_fav.append(data.name);
-            list_fav.append(document.createElement('br'));
-            //list_fav.appendChild(document.createElement('hr'));
+            CreateBlockFav(list_fav, index);
         }
     }
     } catch (user_error) {
         alert('Can not get access to your profile data');
     }
 }
-    const check = (email, password) => {
-        if (!email || !password) {
-            alert("Email and password can not be empty!");
-            return false
-        }
-        return true
+
+async function CreateBlockFav(list_fav, productId) {
+    const { data, error: list_error } = await supabaseClient.from('Product').select('img_url, name').eq('id', productId).single();
+
+    if (list_error || !data) {
+        console.warn('Product fetch failed:', list_error);
+        return;
     }
 
-    function hide_blocks(enter_text, data_block){
-        enter_text.style.opacity = 0;
-        enter_text.style.display = 'none';
-        data_block.style.opacity = 1;
-        data_block.style.display = 'block';
+    const block = document.createElement('div');
+    block.className = 'fav-block';
+
+    const img = document.createElement('img');
+    img.src = data.img_url;
+    img.alt = data.name;
+    img.loading = 'lazy';
+    img.className = 'fav-img';
+
+    const item_img = document.createElement('div');
+    item_img.className = 'fav-img-container';
+    item_img.appendChild(img);
+
+    const item_text = document.createElement('div');
+    item_text.className = 'fav-text';
+    item_text.textContent = data.name;
+
+    block.appendChild(item_img);
+    block.appendChild(item_text);
+    list_fav.appendChild(block);
+
+    const hr = document.createElement('hr');
+    hr.className = 'fav-divider';
+    list_fav.appendChild(hr);
+}
+
+function CrateFlexBlock(block) {
+    block.style.display = 'flex';
+    block.style.flexDirection = 'row';
+    block.style.gap = '10px';
+    block.style.alignItems = 'flex-start';;
+}
+
+function Style(img) {
+    img.loading = 'lazy';
+    img.style.width = '10vw';
+    img.style.height = 'auto';
+    img.style.padding = '3%';
+}
+
+const check = (email, password) => {
+if (!email || !password) {
+    alert("Email and password can not be empty!");
+        return false
     }
+    return true
+}
+
+function hide_blocks(enter_text, data_block){
+    enter_text.style.opacity = 0;
+    enter_text.style.display = 'none';
+    data_block.style.opacity = 1;
+    data_block.style.display = 'block';
+}

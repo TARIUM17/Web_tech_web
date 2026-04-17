@@ -20,8 +20,10 @@ async function Developments() {
     if (error) {console.log('Ошибка Supabase:', error); return;}
     if (!data || data.length === 0) return;
 
+    const element = document.createElement('div');
+    element.className = 'slider';
+
     const list = document.querySelectorAll('.slider .slide');
-    console.log(list);
     list.forEach((element, index) => {
         const row = data[index];
         if (!row) return;
