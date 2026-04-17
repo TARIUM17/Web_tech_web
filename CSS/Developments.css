@@ -13,10 +13,17 @@ body {
 }
 
 .slide {
-    min-width: 98vw;
-    height: 100vh;
-    scroll-snap-align: start;
-    margin: 17px;
+  min-width: 98vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  margin: 17px;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: slideIn 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @media (width >= 300px) and (width <= 800px) {

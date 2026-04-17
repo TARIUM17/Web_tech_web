@@ -15,33 +15,34 @@ Developments_button.addEventListener("click", async (e) => {
 });
 
 async function Developments() {
-
     const { data, error } = await supabaseClient.from('Product').select('name, info, img_url'); //Table
-    if (error) {console.log('Ошибка Supabase:', error); return;}
-    if (!data || data.length === 0) return;
+    if (error) {
+        console.log('Ошибка Supabase:', error);
+        return;
+    }
+    if (!data || data.length === 0) {
+        alert('Can\'t connect to database or database don\'t exist');
+        return;
+    }
+    const list = document.querySelector('.slider');
 
-    const element = document.createElement('div');
-    element.className = 'slider';
-
-    const list = document.querySelectorAll('.slider .slide');
-    list.forEach((element, index) => {
-        const row = data[index];
-        if (!row) return;
-        
+    data.forEach(element => {
+        const slide = document.createElement('div');
+        slide.className = 'slide';
         const text_name = document.createElement('h1');
-        text_name.textContent = row.name;
+        text_name.textContent = element.name;
         
         const text_other = document.createElement('p');
-        text_other.textContent = row.info;
+        text_other.textContent = element.info;
         
         const img = document.createElement('img');
-        img.src = row.img_url;
-        img.alt = row.name;
+        img.src = element.img_url;
+        img.alt = element.name;
         img.loading = 'lazy';
         
-        element.innerHTML = '';
-        element.appendChild(img);
-        element.appendChild(text_name);
-        element.appendChild(text_other);
-  })
+        slide.appendChild(text_name);
+        slide.appendChild(img);
+        slide.appendChild(text_other);
+        list.appendChild(slide);
+    });
 }
