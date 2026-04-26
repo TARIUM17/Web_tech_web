@@ -32,6 +32,9 @@ body {
   width: 90%;
   height: auto;
   padding: 3%;
+  border-radius: 3vh;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 }
 
@@ -41,5 +44,8 @@ body {
   width: 20vw;
   height: auto;
   padding: 3%;
+  border-radius: 5vh;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 }
