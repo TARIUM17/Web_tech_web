@@ -1,6 +1,6 @@
 const content_main = `
 <video id="bg-video" autoplay muted playsinline>
-    <source src="../samples/Web_animation_test.mp4" type="video/mp4">
+    <source src="/samples/Web_animation_test.mp4" type="video/mp4">
     <h1>Your brawser can not support video format.</h1>
 </video>
 
@@ -8,7 +8,7 @@ const content_main = `
 <header>
         <div class = "wrapper">
     <div class = "logo"> 
-        <img src="../samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
+        <img src="/samples/Cyberfun_Tech_Logo.svg" alt="CyberFun Tech logo">
     </div>
     <h2>
         <span class = "text-logo"> The place where 
