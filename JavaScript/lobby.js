@@ -1,7 +1,6 @@
-import Hide from '../hide_bg.js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
-import Hide from "../hide_bg.js";
-import { addRoute, navigate, initRouter } from "./router.js";
+import Hide from './hide_bg.js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import { addRoute, navigate } from "./router.js";
         const content_text = `
 <div id="app"></div>
 <div class="content">

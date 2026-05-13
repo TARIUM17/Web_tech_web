@@ -6,12 +6,13 @@ import { addRoute, navigate } from "../router.js";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const profile_button = document.getElementById('profile-link');
-
-profile_button.addEventListener("click", async (e) => {
-    e.preventDefault();
-
-    navigate('/profile');
-});
+if (profile_button) {
+    profile_button.addEventListener("click", (e) => {
+        e.preventDefault();
+    
+        navigate('/profile');
+    });
+}
 
 export async function renderProfile() {
     Hide(content_profile);

@@ -8,7 +8,7 @@ export const main_after = `
             </div>
         </div>
         <div class="box2">
-            <img src="/samples/Robot-Era-1536x864.jpg" alt="Our goals and achivments">
+            <img src="../samples/Robot-Era-1536x864.jpg" alt="Our goals and achivments">
         </div>
         <div class="box3">
             <div class="header-txt">
@@ -17,7 +17,7 @@ export const main_after = `
             </div>
         </div>
         <div class="box4">
-            <img src="/samples/depositphotos_237141906-stock-photo-man-in-suit-and-tie.jpg" alt="Don't let us down!">
+            <img src="../samples/depositphotos_237141906-stock-photo-man-in-suit-and-tie.jpg" alt="Don't let us down!">
         </div>
     </div>
 </div>
