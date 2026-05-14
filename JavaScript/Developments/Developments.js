@@ -17,7 +17,7 @@ export async function renderCatalog() {
     const slider = document.querySelector('.slider');
     if (slider) slider.innerHTML = '';
     
-    showSpinner(); 
+    showSpinner();
     
     try {
         await Developments(); 
@@ -75,9 +75,6 @@ async function Developments() {
         img.loading = 'lazy';
         img.style.borderRadius = '20px';
         slide.append(text_name, img, text_other);
-        // slide.appendChild(text_name);
-        // slide.appendChild(img);
-        // slide.appendChild(text_other);
         list.appendChild(slide);
         });
     }

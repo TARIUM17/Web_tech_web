@@ -14,6 +14,7 @@ import { addRoute, navigate } from "./router.js";
 export function renderLobby() {
     Hide(content_text);
     const video = document.getElementById('bg-video');
+    video.style.opacity = '1';
     console.log(video);
     const resumeBtn = document.getElementById('resume-btn');
     const email_inp = document.getElementById('email');

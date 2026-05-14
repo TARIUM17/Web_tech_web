@@ -18,13 +18,13 @@ export function renderWelcome() {
         video.style.display = 'none';
     }
     
-    const info = document.getElementById('after_reg');
+    const info = document.getElementById('text');
     if (info) {
         const fadeTimer = setTimeout(() => {
             info.style.opacity = '1';
             info.style.visibility = 'visible';
             document.body.style.overflow = 'auto';
-        }, 1000);
+        }, 200);
 
         const cleanup = () => {
             clearTimeout(fadeTimer);

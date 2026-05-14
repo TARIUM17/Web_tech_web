@@ -18,7 +18,6 @@ export function navigate(path) {
 export function initRouter() {
     window.addEventListener('hashchange', () => navigate());
     
-    // Ждём пока DOM полностью загрузится и all.js отрендерит контент
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => setTimeout(navigate, 100));
     } else {
