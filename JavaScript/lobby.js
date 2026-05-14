@@ -1,6 +1,7 @@
 import Hide from './hide_bg.js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./config.js";
+import { login } from '../API/auth/auth.js';
 import { addRoute, navigate } from "./router.js";
+import { requireAuth } from '../API/auth/reqAuth.js';
         const content_text = `
 <div id="app"></div>
 <div class="content">
@@ -11,10 +12,23 @@ import { addRoute, navigate } from "./router.js";
 </div>
 `;
 
-export function renderLobby() {
+export async function Lobby() {
+    const isAuth = await requireAuth();
+    if(isAuth) {
+        navigate('/lobby/welcome');
+        return;
+    }
+
+    await renderLobby();
+}
+
+export async function renderLobby() {
+    let data;
     Hide(content_text);
     const video = document.getElementById('bg-video');
     video.style.opacity = '1';
+    video.style.display = 'block';
+
     console.log(video);
     const resumeBtn = document.getElementById('resume-btn');
     const email_inp = document.getElementById('email');
@@ -25,11 +39,6 @@ export function renderLobby() {
     const STOP_TIME = 5;
     let is_Paused = false;
     let is_Pressed = false; 
-    
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    (async () => {
-      const { data: { session } } = await supabaseClient.auth.getSession();
-    })();
     
     video.addEventListener('loadedmetadata', () => {
         video.playbackRate = 4; 
@@ -53,8 +62,7 @@ export function renderLobby() {
         const password = pass_inp.value;
         check(email, password);
         try {
-            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-            if (error) throw error;
+            data = await login(email, password);
             video.play();
             navigate('/lobby/welcome');
         } catch (error) {

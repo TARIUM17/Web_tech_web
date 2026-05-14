@@ -1,4 +1,4 @@
-import { getCurrentSession } from "../services/session";
+import { getCurrentSession } from "../services/session.js";
 
 export async function getUserId() {
     const session = await getCurrentSession();

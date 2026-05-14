@@ -1,14 +1,19 @@
 import '../all.js';
+import { logout } from '../../API/auth/log_out.js';
+await logout();
 import { addRoute, initRouter } from '../router.js';
 
-import { renderLobby } from '../lobby.js';
+import { Lobby } from '../lobby.js';
 import { renderWelcome } from './main_script.js';
-import { renderProfile } from '../Profile/Profile.js';
+import { renderProfile, renderProfileRegistration } from '../Profile/Profile.js';
 import { renderCatalog } from '../Developments/Developments.js';
+import { Game } from '../Game/Game.js';
 
-addRoute('/lobby', renderLobby);
+addRoute('/lobby', Lobby);
 addRoute('/lobby/welcome', renderWelcome);
+addRoute('/enter', renderProfileRegistration);
 addRoute('/profile', renderProfile);
 addRoute('/catalog', renderCatalog);
+addRoute('/profile/game', Game);
 
 initRouter();

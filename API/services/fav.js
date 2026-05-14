@@ -1,5 +1,5 @@
-import { getUserId } from '../auth/Id'
-import { supabaseClient } from '../services/supabase';
+import { getUserId } from '../auth/Id.js'
+import { supabaseClient } from './supabase.js';
 
 export async function getFav() {
     const Id = getUserId();

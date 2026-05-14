@@ -1,20 +1,46 @@
-import{ SUPABASE_URL, SUPABASE_ANON_KEY } from "../config.js";
 import {content_profile} from "./profile_html.body.js";
 import  Hide  from "../hide_bg.js";
 import { addRoute, navigate } from "../router.js";
-
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+import { getCurrentSession } from "../../API/services/session.js";
+import { login } from "../../API/auth/auth.js";
+import { register} from "../../API/auth/registration.js";
+import { getName } from "../../API/auth/username.js";
+import { getFav } from "../../API/services/fav.js";
+import { getUserId } from "../../API/auth/Id.js";
+import { getRole } from "../../API/auth/role.js";
+import { getFavBlock } from "../../API/products/createFavBllock.js";
+import { requireAuth } from "../../API/auth/reqAuth.js";
 
 const profile_button = document.getElementById('profile-link');
 if (profile_button) {
     profile_button.addEventListener("click", (e) => {
         e.preventDefault();
-    
+        
         navigate('/profile');
     });
 }
 
 export async function renderProfile() {
+    const isAuth = await requireAuth();
+    if (!isAuth) {
+        navigate('/enter');
+        return;
+    }
+
+    await ProfilePage();
+}
+
+export async function renderProfileRegistration() {
+    const isAuth = await requireAuth();
+    if (isAuth) {
+        navigate('/profile');
+        return;
+    }
+
+    await ProfileRegistration();
+}
+
+export async function ProfileRegistration() {
     Hide(content_profile);
 
     document.body.style.overflow = '';
@@ -43,14 +69,14 @@ export async function renderProfile() {
 
     send_button.addEventListener('click', async (e) => {
         e.preventDefault();
+        let data;
         const email = document.getElementById('profile_email').value;
         const password = document.getElementById('profile_pass').value;
         if(!is_Pressed_p) {
                 
             if (!check(email, password)) return;
             try {
-                const { data: login , error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (error) throw error;
+                data = await login(email, password)
                 hide_blocks(enter_text, data_block);
             } catch (error) {
                 button.style.backgroundColor = 'red';
@@ -59,50 +85,41 @@ export async function renderProfile() {
         } else {
             if (!check(email, password)) return;
             try {
-                const { data: signUpData, error: signUpError } = await supabaseClient.auth.signUp({ email, password, 
-                    options: {
-                        data: {
-                            name: document.getElementById('username').value,
-                        },
-                    },
-                });
-                if (signUpError) {console.log('error with sign up'); throw signUpError;}
+                data = register(email, password, document.getElementById('username').value);
 
                 hide_blocks(enter_text, data_block);
-                const user = signUpData.user;
+                const user = data.user;
                 if (!user) throw new Error('User not created!')
-                const user_UID = user.id;
+                const user_UID = getUserId();
                 const { error: error_insert } = await supabaseClient.from('Roles').insert([{user : user_UID}]);
                 if(error_insert) throw new Error('Failed to connect user\'s data');
                 } catch (error) {
                     alert(error.message());
                 };
             }
-        await After();
+        navigate('/profile');
     })
 }
 
-async function After() {
+export async function ProfilePage() {
     try {
-    const { data: { session }, error: sesserror } = await supabaseClient.auth.getSession();
-    if(sesserror || !session.user) throw new Error ('NO current session was found!')
-    const curr_user = session.user;
-    const curr_name = curr_user.user_metadata.name;
+    Hide(content_profile);
+    hide_blocks(document.querySelector('.enter_box'), document.querySelector('.data_block_info'));
+    const curr_name = await getName();
 
     const list = document.querySelector('.data_username');
     list.innerHTML = '';
     list.append(curr_name);
 
     const curr_role = document.querySelector('.depen_role');
-    const user_id = curr_user.id;
-    const { data: data_user_role, error: user_error } = await supabaseClient.from('Roles').select('role, favourite').eq('user', user_id).single(); //Table
-    if (user_error) throw user_error;
+    
+    const data_role = await getRole();
     curr_role.innerHTML='';
-    curr_role.append(data_user_role.role);
+    curr_role.append(data_role.role);
 
     const list_fav = document.querySelector('.list_of_fav');
     list_fav.innerHTML = '';
-    const curr_list_favourites = data_user_role.favourite;
+    const curr_list_favourites = data_role.favourite;
     if (!curr_list_favourites || curr_list_favourites.length === 0)
             list_fav.append('empty!');
     else {
@@ -111,17 +128,22 @@ async function After() {
             CreateBlockFav(list_fav, index);
         }
     }
-    } catch (user_error) {
+    } catch (error) {
+        throw error;
         alert('Can not get access to your profile data');
     }
 }
 
 async function CreateBlockFav(list_fav, productId) {
-    const { data, error: list_error } = await supabaseClient.from('Product').select('img_url, name').eq('id', productId).single();
-
-    if (list_error || !data) {
-        console.warn('Product fetch failed:', list_error);
-        return;
+    let data;
+    try {
+        data = getFavBlock(productId);
+    }
+    catch (error) {
+        if (error || !data) {
+            console.warn('Product get-process failed:', error);
+            return;
+        }
     }
 
     const block = document.createElement('div');

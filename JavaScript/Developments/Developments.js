@@ -1,9 +1,7 @@
 import {content_develops} from "./Developments_html.body.js";
 import Hide from "../hide_bg.js";
-import {SUPABASE_URL, SUPABASE_ANON_KEY} from '../config.js';
 import { addRoute, navigate } from "../router.js";
-
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+import { getProducts } from '../../API/products/poduction.js'
 
 const Developments_button = document.getElementById('Developments-link');
 Developments_button.addEventListener("click", async (e) => {
@@ -48,9 +46,11 @@ function hideSpinner() {
 }
 
 async function Developments() {
-    const { data, error } = await supabaseClient.from('Product').select('name, info, img_url'); //Table
-
-    if (error) {
+    let data;
+    try {
+        data = await getProducts();
+    }
+    catch (error) {
         console.log('Supabase error:', error);
         alert('Can\'t connect to database or database don\'t exist');
         return;

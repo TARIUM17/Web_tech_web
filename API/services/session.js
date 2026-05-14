@@ -1,4 +1,4 @@
-import { supabaseClient } from '../services/supabase';
+import { supabaseClient } from './supabase.js';
 
 export async function getCurrentSession() {
     const { data, error} = await supabaseClient.auth.getSession();
