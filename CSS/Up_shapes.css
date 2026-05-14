@@ -63,3 +63,34 @@
         transform: rotate(360deg);
     }
 }
+
+@media (width >= 300px) and (width <= 800px) {
+.text-logo{
+    opacity: 0;
+    display: none;
+}
+
+.logo img {
+    width: 10vh;
+    height: auto;
+    float: left;
+    margin-right: 1%;
+}
+
+.Upper_logo_menu {
+    text-align: right;
+    position: relative;
+    top: 0px;
+    left: -20px;
+}
+
+.Up_placer a{
+    display: inline-block;
+    font-size: 80%;
+    margin-right: 3%;
+    margin-left: 1%;
+    text-decoration: none;
+    color: white;
+    transform: translate(-3%, -1%);
+}
+}
