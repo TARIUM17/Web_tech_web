@@ -1,3 +1,6 @@
+//import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import { TabulatorFull as Tabulator } from 'https://unpkg.com/tabulator-tables@6.3.0/dist/js/tabulator_esm.min.js'
+//import 'tabulator-tables/dist/css/tabulator.min.css'
 import {content_profile} from "./profile_html.body.js";
 import  Hide  from "../hide_bg.js";
 import { addRoute, navigate } from "../router.js";
@@ -10,12 +13,13 @@ import { getUserId } from "../../API/auth/Id.js";
 import { getRole } from "../../API/auth/role.js";
 import { getFavBlock } from "../../API/products/createFavBllock.js";
 import { requireAuth } from "../../API/auth/reqAuth.js";
+import { getUsersList } from "../../API/services/users.js";
 
 const profile_button = document.getElementById('profile-link');
+
 if (profile_button) {
     profile_button.addEventListener("click", (e) => {
         e.preventDefault();
-        
         navigate('/profile');
     });
 }
@@ -103,34 +107,82 @@ export async function ProfileRegistration() {
 
 export async function ProfilePage() {
     try {
-    Hide(content_profile);
-    hide_blocks(document.querySelector('.enter_box'), document.querySelector('.data_block_info'));
-    const curr_name = await getName();
+        Hide(content_profile);
+        const data_block = document.querySelector('.data_block_info');
+        hide_blocks(document.querySelector('.enter_box'), data_block);
+        const curr_name = await getName();
 
-    const list = document.querySelector('.data_username');
-    list.innerHTML = '';
-    list.append(curr_name);
+        const list = document.querySelector('.data_username');
+        list.innerHTML = '';
+        list.append(curr_name);
 
-    const curr_role = document.querySelector('.depen_role');
+        const curr_role = document.querySelector('.depen_role');
     
-    const data_role = await getRole();
-    curr_role.innerHTML='';
-    curr_role.append(data_role.role);
+        const data_role = await getRole();
+        curr_role.innerHTML='';
+        curr_role.append(data_role.role);
 
-    const list_fav = document.querySelector('.list_of_fav');
-    list_fav.innerHTML = '';
-    const curr_list_favourites = data_role.favourite;
-    if (!curr_list_favourites || curr_list_favourites.length === 0)
+        const list_fav = document.querySelector('.list_of_fav');
+        list_fav.innerHTML = '';
+        const curr_list_favourites = data_role.favourite;
+        if (!curr_list_favourites || curr_list_favourites.length === 0)
             list_fav.append('empty!');
-    else {
-        list_fav.appendChild(document.createElement('hr'));
-        for (const index of curr_list_favourites) {
-            CreateBlockFav(list_fav, index);
+        else {
+            list_fav.appendChild(document.createElement('hr'));
+            for (const index of curr_list_favourites) {
+                CreateBlockFav(list_fav, index);
+            }
         }
-    }
+    
+        const list_button = document.createElement('button');
+        list_button.style.opacity = '0';
+        list_button.style.display = 'none';
+        list_button.className = 'List_Button';
+        list_button.append("Get List of Users");
+        data_block.appendChild(list_button);
+
+        if(data_role.role === "admin") {
+            list_button.style.opacity = '1';
+            list_button.style.display = 'block';
+        }
+    
+        list_button.addEventListener('click', (e) => {
+            const div_usersList = document.createElement('div');
+                div_usersList.className = 'UsersList';
+                PaginationList(div_usersList);
+                document.querySelector('.data_block_info').appendChild(div_usersList);
+            });
     } catch (error) {
-        throw error;
+        alert( error );
         alert('Can not get access to your profile data');
+    }
+}
+
+async function PaginationList(div_usersList) {
+    try {
+        const data = await getUsersList();
+        const div = document.createElement(div);
+        div.id = 'example-table';
+        var table = new Tabulator("#example-table", {
+            pagination: true,
+            paginationMode: "remout",
+            paginationSize:5, //optional parameter to request a certain number of rows per page
+            height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+            layout:"fitColumns",
+            ajaxRequestFunc: async (url, config, params) => {
+                getUsersList(params.page, params.size)
+            }, //set any standard parameters to pass with the request
+            //paginationInitialPage:2, //optional parameter to set the initial page to load
+ 	        columns:[
+	 	        {title:"Name", field:"Display name", width:150},
+	 	        {title:"Email", field:"Email"},
+	 	        {title:"Role", field:"Role", hozAlign:"center"},
+ 	        ],
+        });
+        div_usersList.appendChild(div);
+    }
+    catch(error) {
+        alert(error);
     }
 }
 

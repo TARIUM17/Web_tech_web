@@ -26,10 +26,7 @@ export async function renderLobby() {
     let data;
     Hide(content_text);
     const video = document.getElementById('bg-video');
-    video.style.opacity = '1';
-    video.style.display = 'block';
-
-    console.log(video);
+    video.style.opacity = '1';                           ////////////////////////////////////////////////////////////
     const resumeBtn = document.getElementById('resume-btn');
     const email_inp = document.getElementById('email');
     const pass_inp = document.getElementById('pass');

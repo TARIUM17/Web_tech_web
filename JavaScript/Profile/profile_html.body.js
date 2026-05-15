@@ -21,7 +21,7 @@ export const content_profile = `
         <h3>Marked products:</h3><div class="list_of_fav"></div>
         <br>
         <div>
-        Do you want to send your development to us? Please send the information here: <a href="#" target="_self" id = "invention_form">Form for projects</a>.
+            Do you want to send your development to us? Please send the information here: <a href="#" target="_self" id = "invention_form">Form for projects</a>.
         </div>
     </div>
 </div>
