@@ -14,6 +14,7 @@ import { getRole } from "../../API/auth/role.js";
 import { getFavBlock } from "../../API/products/createFavBllock.js";
 import { requireAuth } from "../../API/auth/reqAuth.js";
 import { getUsersList } from "../../API/services/users.js";
+import { SUPABASE_URL } from '../config.js';
 
 const profile_button = document.getElementById('profile-link');
 
@@ -53,7 +54,6 @@ export async function ProfileRegistration() {
     const username_state = document.getElementById('username');
     const data_block = document.querySelector('.data_block_info');
     const enter_text = document.querySelector('.enter_box');
-    console.log(data_block);
     let is_Pressed_p = false;
 
     button.addEventListener('click', (e) => {
@@ -149,8 +149,8 @@ export async function ProfilePage() {
         list_button.addEventListener('click', (e) => {
             const div_usersList = document.createElement('div');
                 div_usersList.className = 'UsersList';
-                PaginationList(div_usersList);
                 document.querySelector('.data_block_info').appendChild(div_usersList);
+                PaginationList(div_usersList, list_button);
             });
     } catch (error) {
         alert( error );
@@ -158,33 +158,48 @@ export async function ProfilePage() {
     }
 }
 
-async function PaginationList(div_usersList) {
+async function PaginationList(div_usersList, button) {
     try {
-        const data = await getUsersList();
-        const div = document.createElement(div);
-        div.id = 'example-table';
-        var table = new Tabulator("#example-table", {
+        console.log(div_usersList);
+        button.style.opacity = '0';
+        button.style.display = 'none';
+        const div = document.createElement("div");
+        div.id = "table"
+
+        div_usersList.appendChild(div);
+
+        const table = new Tabulator(div, {
+
+            ajaxURL: SUPABASE_URL,
+            // ajaxParams:{token: getRole().role},
             pagination: true,
-            paginationMode: "remout",
-            paginationSize:5, //optional parameter to request a certain number of rows per page
-            height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-            layout:"fitColumns",
-            ajaxRequestFunc: async (url, config, params) => {
-                getUsersList(params.page, params.size)
-            }, //set any standard parameters to pass with the request
+            paginationMode: "remote",
+            paginationSize: 5,
+
+            height: 205,
+            layout: "fitColumns",
+            ajaxRequestFunc: (url, config, params) => {
+                console.log("REQUEST");
+                return getUsersList(params.page, params.size)
+            },
+            // ajaxRequestFunc: async (url, config, params) => {
+            //     return await getUsersList(params.page, params.size); 
+            // },
             //paginationInitialPage:2, //optional parameter to set the initial page to load
  	        columns:[
-	 	        {title:"Name", field:"Display name", width:150},
-	 	        {title:"Email", field:"Email"},
-	 	        {title:"Role", field:"Role", hozAlign:"center"},
+	 	        {title:"Name", field:"display_name", width:150},
+	 	        {title:"Email", field:"email"},
+	 	        {title:"Role", field:"role", hozAlign:"center"},
+                {title:"Created", field:"created_at", hozAlign:"center"},
  	        ],
         });
-        div_usersList.appendChild(div);
     }
     catch(error) {
+        console.error(error);
         alert(error);
     }
 }
+
 
 async function CreateBlockFav(list_fav, productId) {
     let data;
