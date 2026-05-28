@@ -163,6 +163,7 @@ export async function ProfilePage() {
         }
 
         const gameButton = document.getElementById('game');
+        
 
     } catch (error) {
         alert( error );
