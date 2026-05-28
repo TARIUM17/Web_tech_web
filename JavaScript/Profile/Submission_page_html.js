@@ -6,8 +6,13 @@ export const content_sub_page = `
             <img id="preview" style="display: none;">
             <input type="file" id="fileInput" accept="image/*">
         </label>
-    <div>
-    <div class = "name"><div>
-    <div class = "disc"><div>
+    </div>
+    <div class = "name">
+        <input type="text" placeholder="Title...">
+    </div>
+    <div class = "desc">
+        <textarea name="description" rows="5" cols="80" placeholder="Description..."></textarea>
+    </div>
+        
 </div>
 `;

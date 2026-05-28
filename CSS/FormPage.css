@@ -1,15 +1,15 @@
 
 body {
     font-family: Arial, sans-serif;
-    padding: 40px;
     background-color: black;
     overflow: hidden;
 }
 
 .all {
+    padding: 40px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
 }
 
 .photo {
@@ -22,7 +22,7 @@ body {
     grid-column-end: 3;
 }
 
-.disc {
+.desc {
     grid-column-start: 1;
     grid-column-end: 3;
 

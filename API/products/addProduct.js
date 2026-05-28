@@ -1,7 +1,7 @@
 import { supabaseClient } from "../services/supabase.js";
 
 export async function addProduct() {
-    const { error} = await supabaseClient.from('Product').select('img_url, name').eq('id', favId).single();
+    const {data, error} = await supabaseClient.from('Product').insert('');
 
     if (error) throw error;
 }

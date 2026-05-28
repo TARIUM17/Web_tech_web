@@ -152,6 +152,16 @@ export async function ProfilePage() {
                 document.querySelector('.data_block_info').appendChild(div_usersList);
                 PaginationList(div_usersList, list_button);
             });
+    
+        const page_button = document.getElementById('invention_form');
+
+        if(page_button) { 
+            page_button.addEventListener("click", (e) => {
+                e.preventDefault();
+                navigate('/profile/form_page');
+            })
+        }
+
     } catch (error) {
         alert( error );
         alert('Can not get access to your profile data');

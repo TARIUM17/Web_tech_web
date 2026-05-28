@@ -1,16 +1,8 @@
 import {content_sub_page} from "./Submission_page_html.js";
 import  Hide  from "../hide_bg.js";
-import { addRoute, navigate } from "../router.js";
+import { navigate } from "../router.js";
 import { addProduct } from "../../API/products/addProduct.js";
-
-const page_button = document.getElementById('invention_form');
-
-if(page_button) { 
-    page_button.addEventListener("click", (e) => {
-        e.preventDefault();
-        navigate('/profile/form_page');
-    })
-}
+import { requireAuth } from "../../API/auth/reqAuth.js";
 
 export async function renderSubmissionPage() {
     const isAuth = await requireAuth();
@@ -22,7 +14,7 @@ export async function renderSubmissionPage() {
     await SubmissionPage();
 }
 
-export async function SubmissionPage() {
+export function SubmissionPage() {
     Hide(content_sub_page);
 
     const fileInput = document.getElementById('fileInput');
