@@ -83,7 +83,7 @@ export async function ProfileRegistration() {
                 data = await login(email, password)
                 hide_blocks(enter_text, data_block);
             } catch (error) {
-                button.style.backgroundColor = 'red';
+               // button.style.backgroundColor = 'red';
                 alert(error.message);
             }
         } else {
