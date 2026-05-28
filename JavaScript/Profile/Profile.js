@@ -162,6 +162,8 @@ export async function ProfilePage() {
             })
         }
 
+        const gameButton = document.getElementById('game');
+
     } catch (error) {
         alert( error );
         alert('Can not get access to your profile data');

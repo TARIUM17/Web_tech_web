@@ -23,6 +23,7 @@ export const content_profile = `
         <div>
             Do you want to send your development to us? Please send the information here: <a href="javascript:;" target="_self" id = "invention_form">Form for projects</a>.
         </div>
+        <button id="game">Wanna try yourself in computer engineering</button>
     </div>
 </div>
 `;

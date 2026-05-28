@@ -8,11 +8,15 @@ export const content_sub_page = `
         </label>
     </div>
     <div class = "name">
-        <input type="text" placeholder="Title...">
+        <input type="text" id="formTitle" placeholder="Title...">
     </div>
     <div class = "desc">
-        <textarea name="description" rows="5" cols="80" placeholder="Description..."></textarea>
+        <textarea name="description" id="formDescript" rows="5" cols="80" placeholder="Description..."></textarea>
     </div>
-        
+</div>
+
+<div class = "form_buttons">
+    <button id="clearButton">Clear</button>
+    <button id="sendButton">Send</button>
 </div>
 `;

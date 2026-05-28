@@ -19,20 +19,20 @@ body {
 
 .name {
     grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-end: 4;
 }
 
 .desc {
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 4;
 
     grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-end: 4;
 }
 
 .upload-area {
-    width: 350px;
-    height: 220px;
+    min-width: 30vw;
+    min-height: 22vh;
     overflow: hidden;
     cursor: pointer;
     background: white;
@@ -67,4 +67,67 @@ body {
 
 input[type="file"] {
     display: none;
+}
+
+.name input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 2px solid #dcdcdc;
+    border-radius: 14px;
+
+    font-size: 18px;
+    color: #222;
+    font-family: inherit;
+
+    outline: none;
+    transition: 0.25s;
+    box-sizing: border-box;
+}
+
+.name input::placeholder, .desc textarea::placeholder  {
+    color: #999;
+}
+
+.name input:focus, .desc textarea:focus, .form_buttons #sendButton:hover, .form_buttons #clearButton:hover {
+    transition: 0.3s;
+    border-color: #4f46e5;
+    box-shadow:0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+
+.desc textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 18px 20px;
+    border: 2px solid #dcdcdc;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #222;
+
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: inherit;
+
+    resize: vertical;
+    outline: none;
+    transition: 0.25s;
+    box-sizing: border-box;
+}
+
+.form_buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;;
+    gap: 10%;
+    padding: 20px;
+}
+
+.form_buttons #sendButton, .form_buttons #clearButton {
+    padding: 8px 12px;
+    border: 2px solid #dcdcdc;
+    border-radius: 4px;
+    background-color: rgb(172, 172, 172);
+    color: black;
+    cursor: pointer;
+    white-space: nowrap;
 }
