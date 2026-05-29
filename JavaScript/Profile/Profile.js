@@ -163,7 +163,12 @@ export async function ProfilePage() {
         }
 
         const gameButton = document.getElementById('game');
-        
+        if(gameButton) {
+            gameButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                navigate('/profile/game');
+            })
+        }
 
     } catch (error) {
         alert( error );
