@@ -76,11 +76,6 @@ export function SubmissionPage() {
         sendButton.addEventListener("click", async (e) => {
             e.preventDefault();
             const file = fileInput.files[0];
-            console.log(formTitle.value);
-            console.log(formDescript.value);
-            console.log(file);
-            const data = await getCurrentSession();
-            console.log(data.session);
             if(formTitle.value != '' && formDescript.value != '' && file != null)
                 addProduct(formTitle.value, formDescript.value, file);
         })

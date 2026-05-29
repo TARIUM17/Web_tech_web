@@ -6,14 +6,16 @@ export const game_html = `
     
         <div class="panel">
             <div class="controls">
-                <button class="up" onclick="addCommand('up')">Up</button>
-                <button class="down" onclick="addCommand('down')">Down</button>
-                <button class="left" onclick="addCommand('left')">Left</button>
-                <button class="right" onclick="addCommand('right')">Right</button>
+                <button id="upBtn" class="up">Up</button>
+                <button id="downBtn" class="down">Down</button>
+                <button id="leftBtn" class="left">Left</button>
+                <button id="rightBtn" class="right">Right</button>
+
+
             </div>
         
-            <button class="start" onclick="startGame()">START</button>
-            <button class="reset" onclick="resetGame()">RESET</button>
+                <button id="startBtn" class="start">START</button>
+                <button id="resetBtn" class="reset">RESET</button>
         
             <div class="info">
                 Max: <span id="maxMoves">20</span><br>
