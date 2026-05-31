@@ -52,11 +52,23 @@ async function Developments() {
     }
     catch (error) {
         console.log('Supabase error:', error);
-        alert('Can\'t connect to database or database don\'t exist');
+        new Toast({
+            title: false,
+            text: 'Can\'t connect to database or database don\'t exist',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
         return;
     }
     if (!data || data.length === 0) {
-        alert('Can\'t get data from database');
+        new Toast({
+            title: false,
+            text: 'Can\'t get data from database',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
         return;
     }
     const list = document.querySelector('.slider');

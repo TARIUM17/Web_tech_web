@@ -110,7 +110,13 @@ function addCommand(command) {
     if (gameRunning) return;
 
     if (commands.length >= maxMoves) {
-        alert("Limit has reached!");
+        new Toast({
+            title: false,
+            text: 'You reached your max',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
         return;
     }
 
@@ -150,7 +156,13 @@ function moveRobot(direction) {
 
     if (mazeData[newY][newX] === 2) {
         setTimeout(() => {
-            alert("Congratulations");
+            new Toast({
+                title: false,
+                text: 'Congratulations',
+                theme: 'light',
+                autohide: true,
+                interval: 3000
+            });
             gameRunning = false;
         }, 100);
     }
@@ -170,7 +182,13 @@ async function startGame() {
 
     gameRunning = false;
     if (mazeData[robot.y][robot.x] !== 2) {
-        alert("Sorry, but u lose ;)");
+        new Toast({
+            title: false,
+            text: 'Sorry, but u lose ;)',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
     }
 }
 

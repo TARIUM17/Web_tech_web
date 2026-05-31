@@ -54,7 +54,13 @@ export function SubmissionPage() {
         if (!file) return;
 
         if (!file.type.startsWith('image/')) {
-            alert('Выберите изображение');
+            new Toast({
+                title: false,
+                text: 'Please, enter image',
+                theme: 'light',
+                autohide: true,
+                interval: 3000
+            });
             return;
         }
         const imageUrl = URL.createObjectURL(file);
@@ -78,6 +84,15 @@ export function SubmissionPage() {
             const file = fileInput.files[0];
             if(formTitle.value != '' && formDescript.value != '' && file != null)
                 addProduct(formTitle.value, formDescript.value, file);
-        })
+            else {
+                new Toast({
+                    title: false,
+                    text: 'All fields must be fiiled out',
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
+            }
+        })  
     }
 }

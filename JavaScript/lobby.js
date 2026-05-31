@@ -63,14 +63,26 @@ export async function renderLobby() {
             video.play();
             navigate('/lobby/welcome');
         } catch (error) {
-            alert(error.message);
+            new Toast({
+                title: false,
+                text: `${error.message}`,
+                theme: 'light',
+                autohide: true,
+                interval: 3000
+            });
         }
     })
     
     const check = (email, password) => {
         if (!email || !password)
             {
-                alert("Email and password can not be empty!");
+                new Toast({
+                    title: false,
+                    text: 'Email and password can not be empty!',
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
                 return;
             }
         }

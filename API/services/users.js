@@ -20,8 +20,4 @@ export async function getUsersList(iteration = 1, size = 2) {
         data,
         last_page: Math.ceil(count / size),
     }
-
-//       (EXISTS ( SELECT 1
-//    FROM profiles p
-//     WHERE ((p.id = auth.uid()) AND (p.role = 'admin'::text))))
 }

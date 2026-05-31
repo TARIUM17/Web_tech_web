@@ -11,9 +11,11 @@
 }
 
 .game {
+    padding-top: 6vh;
+    padding-left: 30vh;
     display: flex;
-    gap: 30px;
-    align-items: flex-start;
+    gap: 60px;
+    align-items: center;
 }
 
 .panel {
@@ -49,7 +51,7 @@ h1 {
 }
 
 .robot {
-    background: #2f8fff;
+    background: #81bafc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,8 +71,8 @@ button {
     width: 110px;
 }
 
-.up { background: #75a9fd; color: white; }
-.down { background: #fc86b9; color: white; }
+.up { background: #97bdfb; color: white; }
+.down { background: #ffa4a4; color: white; }
 .left { background: #bb8cfd; color: white; }
 .right { background: #fba983; color: white; }
 

@@ -2,6 +2,7 @@
 body{
     overflow: hidden;
     background-color: black;
+    height: 100vh;
 }
 .entering {
     overflow: hidden;
@@ -13,6 +14,10 @@ body{
     transform: translateY(-55%);
     transition: opacity 1s, transform 1s;
     background-color: black;
+}
+
+#main_block {
+    height: 100vh;
 }
 
 @keyframes fadeIn {

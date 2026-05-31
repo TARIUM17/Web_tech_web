@@ -83,8 +83,13 @@ export async function ProfileRegistration() {
                 data = await login(email, password)
                 hide_blocks(enter_text, data_block);
             } catch (error) {
-               // button.style.backgroundColor = 'red';
-                alert(error.message);
+                new Toast({
+                    title: false,
+                    text: `${error.message}`,
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
             }
         } else {
             if (!check(email, password)) return;
@@ -98,7 +103,13 @@ export async function ProfileRegistration() {
                 const { error: error_insert } = await supabaseClient.from('Roles').insert([{user : user_UID}]);
                 if(error_insert) throw new Error('Failed to connect user\'s data');
                 } catch (error) {
-                    alert(error.message());
+                    new Toast({
+                        title: false,
+                        text: `${error.message}`,
+                        theme: 'light',
+                        autohide: true,
+                        interval: 3000
+                    });
                 };
             }
         navigate('/profile');
@@ -171,8 +182,14 @@ export async function ProfilePage() {
         }
 
     } catch (error) {
-        alert( error );
-        alert('Can not get access to your profile data');
+        console.log(error);
+        new Toast({
+            title: false,
+            text: 'Can not get access to your profile data',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
     }
 }
 
@@ -213,8 +230,14 @@ async function PaginationList(div_usersList, button) {
         });
     }
     catch(error) {
-        console.error(error);
-        alert(error);
+        console.log(error);
+        new Toast({
+            title: false,
+            text: 'Unexpected error',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
     }
 }
 
@@ -273,7 +296,13 @@ function Style(img) {
 
 const check = (email, password) => {
 if (!email || !password) {
-    alert("Email and password can not be empty!");
+        new Toast({
+            title: false,
+            text: 'Email and password can not be empty!',
+            theme: 'light',
+            autohide: true,
+            interval: 3000
+        });
         return false
     }
     return true

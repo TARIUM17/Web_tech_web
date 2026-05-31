@@ -1,0 +1,29 @@
+footer {
+    text-align: center;
+    padding-top: 100px;
+}
+
+footer hr{
+    
+}
+
+.youtube-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff0000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.youtube-button:hover {
+    background: #cc0000;
+}
+
+.copyright {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #888;
+}

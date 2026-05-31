@@ -11,7 +11,14 @@ export async function addProduct(Title, Descript, img) {
             if (checkError) throw checkError;
 
             if (existingProduct) {
-                alert("Product already exists");
+                // alert("Product already exists");
+                new Toast({
+                    title: false,
+                    text: 'Product already exists',
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
                 return;
             }
 
@@ -20,7 +27,13 @@ export async function addProduct(Title, Descript, img) {
             const fileExists = files.some(file => file.name === fileName);
 
             if (fileExists) {
-                alert("Product already exists");
+                new Toast({
+                    title: false,
+                    text: 'Product already exists',
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
                 return;
             }
         }
@@ -45,7 +58,16 @@ export async function addProduct(Title, Descript, img) {
             throw error;
         }
         console.log("Product created:", data);
-        alert("Your example was sent. Thank you");
+        //alert("Your example was sent. Thank you");
+        document.getElementById('formTitle').value = '';
+        document.getElementById('formDescript').value = '';
+        new Toast({
+                    title: false,
+                    text: 'Your example was sent. Thank you',
+                    theme: 'light',
+                    autohide: true,
+                    interval: 3000
+                });
         return data;
 
     } catch (error) {
